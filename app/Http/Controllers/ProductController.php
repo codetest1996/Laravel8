@@ -13,8 +13,8 @@ class ProductController extends Controller
     function index(){
 
         $data=Product::query()->paginate(4);
-
-        return view('product', ['list'=>$data,'page_list'=>$data]);
+        
+        return view('product', ['list'=>$data]);
     }
 
     function select(Request $request){
@@ -24,15 +24,15 @@ class ProductController extends Controller
         $data=Product::query()
             ->when($sdata,function($query, $sdata){
                 return $query
-                    ->where('p_label','like','%$sdata%')
-                    ->orwhere('p_name','like','%$sdata%')
-                    ->orwhere('o_price','like','%$sdata%');
+                    ->where('p_label','like',"%$sdata%")
+                    ->orwhere('p_name','like',"%$sdata%")
+                    ->orwhere('o_price','like',"%$sdata%");
             })
-            ->paginate(2);
+            ->get();
 
-        
-         return $this->getRawQuery($data);
-        // return view('select',['list'=>$data, 'page_list'=>$data]);
+       
+        // echo $this->getRawQuery($data);
+        return view('select', ['list'=>$data]);
 
     }
 

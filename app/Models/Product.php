@@ -16,6 +16,8 @@ class Product extends Model
         'p_label',
         'o_price',
         'a_price',
+        'created_at',
+        'updated_at',
 
     ];
 }

@@ -15,6 +15,9 @@
 </div>
 
 <div>
+<!--<pre>
+    {{print_r($list->toArray())}}
+</pre>-->
 
     @foreach($list as $v)
     <div class="row" style="display:inline-block ;border: 1px solid black;">
@@ -22,10 +25,10 @@
             <div class="card">
             <div class="card-body">
                 <h5 class="card-title"> 廠牌  {{ $v->p_label }}</h5>
-                    <p class="card-text">                        
-                        名稱  {{ $v->p_name }}<br>
-                        官方售價  {{ $v->o_price }}<br>
-                        實際售價  {{ $v->a_price }}<br>
+                     <p class="card-text">                        
+                         {{ $v->p_name }}<br>
+                        <span style="color:CC0000; font-size:18px; font-weight: bold;">{{ $v->o_price }}</span>
+                        <span style="color:#888888;text-decoration: line-through">{{ $v->a_price }}</span>
                     </p>
             </div>
             </div>
@@ -33,25 +36,5 @@
     </div>
     @endforeach
 
-
-     <div class="text-center">
-       
-    </div>
-
-
-    <nav aria-label="...">
-        <ul class="pagination pagination-lg">
-            <li class="page-item active" aria-current="page">
-            <span class="page-link">{{ $page_list }}</span>
-            </li>
-        </ul>
-    </nav>
-
-    <style>
-        .w-5{
-            display: none;
-        }
-
-    </style>
 
 </div>
