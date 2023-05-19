@@ -23,7 +23,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'web'],function (){
 
     Route::get('/', [ProductController::class, 'index']);
-    Route::post('/', [ProductController::class, 'select'])->name('select');
+    Route::get('/select', [ProductController::class, 'select'])->name('select');
 
 });
 

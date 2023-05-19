@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -13,14 +14,33 @@ class ProductController extends Controller
 
         $data=Product::query()->paginate(4);
 
-        return view('product', ['list'=>$data,'page_list'=>$data,'total_list'=>$data->total()]);
+        return view('product', ['list'=>$data,'page_list'=>$data]);
     }
 
     function select(Request $request){
-        $data=$request->all()["select_p"];
-       
-        $sql=Product::query()->whereRaw(" (p_label ='%{$data}%' or  p_name ='%{$data}%' or o_price ='%{$data}%') ")->get();
 
+        $sdata=Arr::get($request->all(),'select_p');
+       
+        $data=Product::query()
+            ->when($sdata,function($query, $sdata){
+                return $query
+                    ->where('p_label','like','%$sdata%')
+                    ->orwhere('p_name','like','%$sdata%')
+                    ->orwhere('o_price','like','%$sdata%');
+            })
+            ->paginate(2);
+
+        
+         return $this->getRawQuery($data);
+        // return view('select',['list'=>$data, 'page_list'=>$data]);
+
+    }
+
+
+    public function getRawQuery($sql){
+        $query = str_replace(array('?'), array('\'%s\''), $sql->toSql());
+        $query = vsprintf($query, $sql->getBindings());
+        return $query;
     }
 
 }
