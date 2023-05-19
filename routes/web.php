@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::group(['prefix' => 'web'],function (){
+
+    Route::get('/', [ProductController::class, 'index']);
+    Route::post('/', [ProductController::class, 'select'])->name('select');
+
+});
+
+/*Route::get('/web', function () {
+    return view('product');
+});*/
